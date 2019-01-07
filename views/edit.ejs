@@ -1,0 +1,60 @@
+<%- include header %>
+<div class="row">
+    <%if(message){%>
+    <div class="alert <%if(code == 0){%>alert-danger<%}else{%>alert-success<%}%>">
+        <%= message %>
+    </div>
+    <%}%>
+    <h4 class="page-header">Update</h4>
+    <div class="col-sm-6 col-sm-offset-3">
+        <form method="POST" action="/edit/<%=data._id %>">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" value="<%= data.name %>" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" value="<%= data.password %>" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select class="form-control" name="gender">
+                        <option value="M" <%if(data.gender=="M" ){%>selected
+                            <%}%> >Male</option>
+                        <option value="F" <%if(data.gender=="F" ){%>selected
+                            <%}%> >Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Are you 18+ ?</label>
+                    <input type="checkbox" class="checkbox" name="age" <%if(data.age=="on" ){%>checked
+                    <%}%> >
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Are you ok with that info ?</label>
+                    <input type="radio" class="radio radio-inline" name="info" value="Y" checked="<%if(data.gender=='Y' ){%>checked
+                    <%}%>">Yes</input>
+                    <input type="radio" class="radio radio-inline" name="info" value="N" Checked="<%if(data.gender=='N' ){%>checked
+                    <%}%> ">No
+                    </input>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Update" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include footer %>

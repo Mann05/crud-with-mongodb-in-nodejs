@@ -1,0 +1,100 @@
+<%- include header %>
+<div class="row">
+  <%if(message){%>
+  <div class="alert <%if(code == 0){%>alert-danger<%}else{%>alert-success<%}%>">
+    <%= message %>
+  </div>
+  <%}%>
+  <h4 class="page-header">Create</h4>
+  <div class="col-sm-12">
+    <form method="POST" action="/">
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" name="name" />
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" />
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Gender</label>
+          <select class="form-control" name="gender">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Are you 18+ ?</label>
+          <input type="checkbox" class="checkbox" name="age">
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label>Are you ok with that info ?</label>
+          <input type="radio" class="radio radio-inline" name="info" value="Y">Yes</input>
+          <input type="radio" class="radio radio-inline" name="info" value="N">No </input>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <input type="submit" class="btn btn-success" value="Submit" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <h4 class="page-header">Read</h4>
+  <div class="table">
+    <table class="table table-responsive table-bordered table-stripped">
+      <thead>
+        <th>Name</th>
+        <th>Password</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Info</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <% if(data.length >0){ for(i=0;i<data.length;i++){%>
+        <tr>
+          <td>
+            <%= data[i].name %>
+          </td>
+          <td>
+            <%= data[i].password %>
+          </td>
+          <td>
+            <%= data[i].gender %>
+          </td>
+          <td>
+            <%if(data[i].age == "on"){%>Above 18
+            <%}else{%>Below 18
+            <%}%>
+          </td>
+          <td>
+            <%if(data[i].info == "Y"){%>Satisfied
+            <%}else{%>not Satisfied
+            <%}%>
+          </td>
+          <td>
+            <a href="/edit/<%=data[i]._id %>" class="btn btn-link">Edit</a>
+            <form method="POST" action="/delete/<%=data[i]._id%>">
+              <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+          </td>
+        </tr>
+        <%}}%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include footer %>
