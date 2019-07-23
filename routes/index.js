@@ -41,13 +41,10 @@ router.get('/edit/:id', (req, res) => {
   });
 });
 router.post('/edit/:id', (req, res) => {
+  const {name,password,gender,age,info}=req.body;
   controller.updateOne({ '_id': mongoose.Types.ObjectId(req.params.id) },
     {
-      name: req.body.name,
-      password: req.body.password,
-      gender: req.body.gender,
-      age: req.body.age,
-      info: req.body.info
+      name,      password,      gender,      age,      info
     }, {}, (err, re) => {
       if (err) {
         res.redirect('/?code=' + 0 + '&message=' + err);

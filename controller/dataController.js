@@ -1,8 +1,17 @@
 var service = require('../services/dataServices');
-
+var bcrypt = require('bcrypt');
 
 var create = (payload, callback) => {
-    service.create(payload, callback);
+    bcrypt.genSalt(10,(err,salt)=>{
+        if(err){ return callback(err);}
+        else{
+            bcrypt.hash(payload.password,salt,(err,encpass)=>{
+                if(err){return callback(err);}
+                payload.password=encpass;
+                service.create(payload, callback);
+            });
+        }
+    });
 }
 var find = (criteria, projection, options, callback) => {
     service.find(criteria, projection, options, callback);
