@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
+const mongoSanitize = require('express-mongo-sanitize');
+const xssClean = require('xss-clean');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -28,6 +30,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//Body Parser, reading data from body into req.body
+app.use(express.json({ limit : '10kb'}));
+
+// Data Sanitization against NOSQL query injection
+app.use(mongoSanitize());
+
+// Data Sanitization agains XSS
+app.use(xssClean());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
