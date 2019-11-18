@@ -13,8 +13,8 @@ var create = (payload, callback) => {
         }
     });
 }
-var find = (criteria, projection, options, callback) => {
-    service.find(criteria, projection, options, callback);
+var find = async (criteria, projection, options) => {
+   return await service.find(criteria, projection, options);
 }
 var remove = (query, callback) => {
     service.delete(query, callback);

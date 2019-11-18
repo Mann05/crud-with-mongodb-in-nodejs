@@ -7,12 +7,12 @@ var create = (payload, callback) => {
     data.gender = payload.gender
     data.age = payload.age;
     data.info = payload.info;
-    data.save(payload, (err, r) => {
+    data.save(payload, async (err, r) => {
         callback(err, r);
     });
 }
-var find = (criteria, projection, options, callback) => {
-    dataModel.find(criteria, projection, options, callback);
+var find = async (criteria, projection, options) => {
+    return await dataModel.find(criteria, projection, options);
 }
 var updateOne = (query, updation, options, callback) => {
     dataModel.updateOne(query, updation, options, callback);

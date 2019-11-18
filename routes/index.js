@@ -3,7 +3,7 @@ var router = express.Router();
 var controller = require('../controller/dataController');
 var mongoose = require('mongoose');
 /* GET home page. */
-router.get('/', getDetail, function (req, res, next) {
+router.get('/', getDetail, async function (req, res, next) {
   var code = req.query.code;
   var message = req.query.message;
   var data = req.data;
@@ -58,15 +58,18 @@ router.post('/edit/:id', (req, res) => {
     });
 });
 function getDetail(req, res, next) {
-  controller.find({}, {}, {}, (err, r) => {
-    if (err) {
-      req.data = err;
-      next();
-    } else {
-      req.data = r;
-      next()
-    }
-  });
+  // controller.find({}, {}, {}, (err, r) => {
+  //   if (err) {
+  //     req.data = err;
+  //     next();
+  //   } else {
+  //     req.data = r;
+  //     next()
+  //   }
+  // });
+  var r = await controller.find({},{},{});
+  req.data = r;
+  next()
 }
 
 module.exports = router;
