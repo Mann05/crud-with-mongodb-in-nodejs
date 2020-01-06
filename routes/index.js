@@ -6,8 +6,9 @@ var mongoose = require('mongoose');
 router.get('/', getDetail, async function (req, res, next) {
   var code = req.query.code;
   var message = req.query.message;
-  var data = req.data;
-  res.render('index', { title: 'CRUD with mongodb', code: code, message: message, data: data });
+  //var data = req.data;
+  console.log('hello');
+  return res.render('index', { title: 'CRUD with mongodb', code: code, message: message, data: null });
 });
 router.post('/', (req, res) => {
   controller.create(req.body, (err, re) => {
@@ -58,16 +59,16 @@ router.post('/edit/:id', (req, res) => {
     });
 });
 function getDetail(req, res, next) {
-  // controller.find({}, {}, {}, (err, r) => {
-  //   if (err) {
-  //     req.data = err;
-  //     next();
-  //   } else {
-  //     req.data = r;
-  //     next()
-  //   }
-  // });
-  var r = await controller.find({},{},{});
+  controller.find({}, {}, {}, (err, r) => {
+    if (err) {
+      req.data = err;
+      next();
+    } else {
+      req.data = r;
+      next()
+    }
+  });
+ var r = await controller.find({},{},{});
   req.data = r;
   next()
 }
